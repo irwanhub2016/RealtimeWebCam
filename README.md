@@ -1,1 +1,1 @@
-Testing RealTime WebCame
+Testing RealTime WebCam
