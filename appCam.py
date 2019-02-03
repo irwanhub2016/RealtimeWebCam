@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request
 
 # Raspberry Pi camera module (requires picamera package)
 from camera_pi import Camera
@@ -19,6 +19,16 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+def shutdown_server():
+    func = request.environ.get('192.168.1.6:80')
+    if func is None:
+        raise RuntimeError("No Running")
+    func()
+
+@app.route('/shutdown', methods=['POST'])
+def shutdown()
+    shutdown_server()
+    return 'Server is shutting down ...'
 
 @app.route('/video_feed')
 def video_feed():
